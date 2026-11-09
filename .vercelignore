@@ -1,0 +1,8 @@
+.env
+.venv/
+venv/
+tests/
+__pycache__/
+.pytest_cache/
+Dockerfile
+requirements-dev.txt

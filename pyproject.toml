@@ -1,0 +1,9 @@
+[project]
+name = "randall-api"
+version = "1.0.0"
+description = "Backend de Randall, el asistente de Quasar Devs"
+requires-python = ">=3.12"
+
+[tool.vercel]
+# Vercel carga la app de FastAPI desde app/main.py
+entrypoint = "app.main:app"
