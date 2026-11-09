@@ -6,9 +6,9 @@ import re
 
 from openai import AsyncOpenAI
 
-from .config import Settings
-from .knowledge import system_prompt
-from .schemas import ChatMessage
+from app.config import Settings
+from app.knowledge import system_prompt
+from app.schemas import ChatMessage
 
 VALID_MOODS = {"idle", "happy", "surprised", "wink", "sad", "thinking"}
 _MOOD_TAG = re.compile(r"^\s*\[(\w+)\]\s*")

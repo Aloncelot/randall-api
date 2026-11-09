@@ -14,11 +14,11 @@ from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
-from . import fallback
-from .config import get_settings
-from .llm import ask_llm
-from .ratelimit import RateLimiter
-from .schemas import ChatRequest, ChatResponse
+from app import fallback
+from app.config import get_settings
+from app.llm import ask_llm
+from app.ratelimit import RateLimiter
+from app.schemas import ChatRequest, ChatResponse
 
 logger = logging.getLogger("randall")
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s: %(message)s")
