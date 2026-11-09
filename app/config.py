@@ -27,9 +27,9 @@ class Settings:
     # Proveedor de IA compatible con la API de OpenAI (Groq, Together, OpenAI, OpenRouter...)
     llm_api_key: str = field(default_factory=lambda: os.getenv("LLM_API_KEY", ""))
     llm_base_url: str = field(default_factory=lambda: os.getenv("LLM_BASE_URL", "https://api.groq.com/openai/v1"))
-    llm_model: str = field(default_factory=lambda: os.getenv("LLM_MODEL", "llama-3.3-70b-versatile"))
+    llm_model: str = field(default_factory=lambda: os.getenv("LLM_MODEL", "openai/gpt-oss-120b"))
     llm_timeout: int = field(default_factory=lambda: _int("LLM_TIMEOUT_SECONDS", 20))
-    llm_max_tokens: int = field(default_factory=lambda: _int("LLM_MAX_TOKENS", 350))
+    llm_max_tokens: int = field(default_factory=lambda: _int("LLM_MAX_TOKENS", 800))
 
     # Solo estos orígenes pueden llamar a la API desde el navegador
     allowed_origins: list[str] = field(

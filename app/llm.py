@@ -51,6 +51,8 @@ async def ask_llm(messages: list[ChatMessage], lang: str, settings: Settings) ->
         ],
         temperature=0.4,
         max_tokens=settings.llm_max_tokens,
+        # Los modelos gpt-oss razonan antes de responder: "low" = respuestas rápidas y baratas
+        **({"extra_body": {"reasoning_effort": "low"}} if "gpt-oss" in settings.llm_model else {}),
     )
     content = (completion.choices[0].message.content or "").strip()
     if not content:
