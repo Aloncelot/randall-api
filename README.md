@@ -50,4 +50,14 @@ curl -X POST http://localhost:8000/chat -H "Content-Type: application/json" -d "
 
 ## Actualizar lo que sabe Randall
 
-Edita `knowledge/quasar_devs.es.md` y `knowledge/quasar_devs.en.md` cuando cambie la landing (servicios, proyectos, contacto). Para el modo sin IA, ajusta `app/fallback.py`.
+**No hace falta editar nada aquí.** La landing genera la base de conocimiento desde sus propios textos
+(`src/i18n/es.ts`, `en.ts`, `src/data/projects.ts` y `src/lib/config.ts`) y la publica en
+`https://quasardevs.com/api/knowledge/es` y `/en`. Esta API la descarga (variable `KNOWLEDGE_URL`)
+y la guarda en caché 10 minutos (`KNOWLEDGE_TTL_SECONDS`).
+
+- Cambias un texto en la landing → haces push → en ≤10 min Randall ya responde con lo nuevo.
+- Si la landing no responde, se usa la última copia buena o el respaldo de `knowledge/*.md`.
+  Ese respaldo es una foto del sitio; actualízalo de vez en cuando copiando lo que muestra `/api/knowledge/es` y `/en`.
+- `GET /health` indica de dónde salió el conocimiento: `"knowledge": "remote" | "cache" | "local"`.
+- Las reglas de comportamiento (no inventar precios, licitaciones en vez de venta de equipo, etc.) viven en `app/knowledge.py`.
+- El modo sin IA (`app/fallback.py`) tiene respuestas fijas: revísalo si cambias servicios importantes.

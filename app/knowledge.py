@@ -1,11 +1,28 @@
-"""Carga la base de conocimiento y arma el prompt de sistema de Randall."""
+"""
+Carga la base de conocimiento y arma el prompt de sistema de Randall.
+
+Fuente de verdad: la landing (https://quasardevs.com/api/knowledge/{es|en}), que genera
+el texto desde sus propios archivos de idioma. Así, al cambiar la landing, Randall se
+actualiza solo. Se guarda en caché (KNOWLEDGE_TTL_SECONDS) y, si la landing no responde,
+se usa la última copia buena o, en su defecto, los archivos de respaldo en knowledge/.
+"""
 
 from __future__ import annotations
 
+import logging
+import time
 from functools import lru_cache
 from pathlib import Path
 
+import httpx
+
+from app.config import get_settings
+
 KNOWLEDGE_DIR = Path(__file__).resolve().parent.parent / "knowledge"
+logger = logging.getLogger("randall.knowledge")
+
+# lang -> (texto, momento en que se descargó)
+_cache: dict[str, tuple[str, float]] = {}
 
 MOODS = "happy, idle, surprised, wink, sad, thinking"
 
@@ -38,11 +55,39 @@ Rules:
 
 
 @lru_cache
-def load_knowledge(lang: str) -> str:
+def load_local_knowledge(lang: str) -> str:
+    """Respaldo incluido en el repo (se usa solo si la landing no está disponible)."""
     path = KNOWLEDGE_DIR / f"quasar_devs.{lang}.md"
     return path.read_text(encoding="utf-8")
 
 
-def system_prompt(lang: str) -> str:
+async def load_knowledge(lang: str) -> tuple[str, str]:
+    """Devuelve (texto, origen) donde origen es "remote", "cache" o "local"."""
+    settings = get_settings()
+    cached = _cache.get(lang)
+    if cached and time.monotonic() - cached[1] < settings.knowledge_ttl:
+        return cached[0], "cache"
+
+    if settings.knowledge_url:
+        try:
+            async with httpx.AsyncClient(timeout=4.0, follow_redirects=True) as client:
+                res = await client.get(f"{settings.knowledge_url}/{lang}")
+            res.raise_for_status()
+            text = res.text.strip()
+            # Validación mínima: que parezca la base de conocimiento y no una página de error
+            if len(text) > 500 and "Quasar Devs" in text:
+                _cache[lang] = (text[:40_000], time.monotonic())
+                return _cache[lang][0], "remote"
+            raise ValueError("contenido inesperado")
+        except Exception as exc:
+            logger.warning("No se pudo descargar la base de conocimiento (%s): %s", lang, type(exc).__name__)
+
+    if cached:  # copia anterior, aunque esté vencida
+        return cached[0], "cache"
+    return load_local_knowledge(lang), "local"
+
+
+async def system_prompt(lang: str) -> str:
     label = "BASE DE CONOCIMIENTO" if lang == "es" else "KNOWLEDGE BASE"
-    return f"{_PERSONA[lang]}\n\n=== {label} ===\n{load_knowledge(lang)}"
+    knowledge, _ = await load_knowledge(lang)
+    return f"{_PERSONA[lang]}\n\n=== {label} ===\n{knowledge}"

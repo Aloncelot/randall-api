@@ -1,5 +1,6 @@
 """Pruebas de Randall. Ejecutar con:  pytest -q"""
 
+import asyncio
 import importlib.util
 
 import pytest
@@ -74,15 +75,78 @@ def test_rate_limiter():
     assert limiter.allow("2.2.2.2")
 
 
-def test_system_prompt_has_knowledge():
-    assert "Randall" in system_prompt("es") and "WMS" in system_prompt("es")
-    assert "KNOWLEDGE BASE" in system_prompt("en")
+# ---------- base de conocimiento (landing con respaldo local) ----------
+class _FakeResponse:
+    def __init__(self, text, status=200):
+        self.text, self.status_code = text, status
+
+    def raise_for_status(self):
+        if self.status_code >= 400:
+            raise RuntimeError("http error")
+
+
+def _fake_client(response=None, error=None):
+    class _Client:
+        def __init__(self, *a, **k):
+            pass
+
+        async def __aenter__(self):
+            return self
+
+        async def __aexit__(self, *a):
+            return False
+
+        async def get(self, url):
+            if error:
+                raise error
+            return response
+
+    return _Client
+
+
+def _reset_knowledge(monkeypatch, url):
+    from app import knowledge
+    from app.config import get_settings
+
+    knowledge._cache.clear()
+    monkeypatch.setenv("KNOWLEDGE_URL", url)
+    get_settings.cache_clear()
+    return knowledge
+
+
+def test_system_prompt_uses_local_files_without_url(monkeypatch):
+    knowledge = _reset_knowledge(monkeypatch, "")
+    prompt = asyncio.run(system_prompt("es"))
+    assert "Randall" in prompt and "WMS" in prompt
+    assert "KNOWLEDGE BASE" in asyncio.run(system_prompt("en"))
+    assert asyncio.run(knowledge.load_knowledge("es"))[1] == "local"
+
+
+def test_knowledge_comes_from_landing(monkeypatch):
+    knowledge = _reset_knowledge(monkeypatch, "https://example.com/api/knowledge")
+    remote = "# Quasar Devs desde la landing\n" + "dato " * 200
+    monkeypatch.setattr(knowledge.httpx, "AsyncClient", _fake_client(_FakeResponse(remote)))
+    assert asyncio.run(knowledge.load_knowledge("es")) == (remote.strip(), "remote")
+    # Segunda llamada: sale de la caché
+    assert asyncio.run(knowledge.load_knowledge("es"))[1] == "cache"
+
+
+def test_knowledge_falls_back_when_landing_fails(monkeypatch):
+    knowledge = _reset_knowledge(monkeypatch, "https://example.com/api/knowledge")
+    monkeypatch.setattr(knowledge.httpx, "AsyncClient", _fake_client(error=RuntimeError("caída")))
+    text, source = asyncio.run(knowledge.load_knowledge("es"))
+    assert source == "local" and "Quasar Devs" in text
+    # Una página de error (HTML corto) tampoco se acepta
+    knowledge._cache.clear()
+    monkeypatch.setattr(knowledge.httpx, "AsyncClient", _fake_client(_FakeResponse("<html>404</html>")))
+    assert asyncio.run(knowledge.load_knowledge("es"))[1] == "local"
 
 
 # ---------- API completa (requiere fastapi instalado) ----------
 @pytest.mark.skipif(not HAS_FASTAPI, reason="fastapi no instalado")
 def test_api_endpoints(monkeypatch):
     monkeypatch.setenv("LLM_API_KEY", "")
+    _reset_knowledge(monkeypatch, "")
     from fastapi.testclient import TestClient
 
     from app.main import app

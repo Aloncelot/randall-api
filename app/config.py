@@ -31,6 +31,12 @@ class Settings:
     llm_timeout: int = field(default_factory=lambda: _int("LLM_TIMEOUT_SECONDS", 20))
     llm_max_tokens: int = field(default_factory=lambda: _int("LLM_MAX_TOKENS", 800))
 
+    # Base de conocimiento generada por la landing (sin "/" final). Vacío = usar archivos locales.
+    knowledge_url: str = field(
+        default_factory=lambda: os.getenv("KNOWLEDGE_URL", "https://quasardevs.com/api/knowledge").rstrip("/")
+    )
+    knowledge_ttl: int = field(default_factory=lambda: _int("KNOWLEDGE_TTL_SECONDS", 600))
+
     # Solo estos orígenes pueden llamar a la API desde el navegador
     allowed_origins: list[str] = field(
         default_factory=lambda: _list(

@@ -16,6 +16,7 @@ from fastapi.responses import JSONResponse
 
 from app import fallback
 from app.config import get_settings
+from app.knowledge import load_knowledge
 from app.llm import ask_llm
 from app.ratelimit import RateLimiter
 from app.schemas import ChatRequest, ChatResponse
@@ -75,7 +76,8 @@ def client_ip(request: Request) -> str:
 
 @app.get("/health")
 async def health():
-    return {"status": "ok", "llm": settings.llm_enabled}
+    _, source = await load_knowledge("es")
+    return {"status": "ok", "llm": settings.llm_enabled, "knowledge": source}
 
 
 @app.post("/chat", response_model=ChatResponse)

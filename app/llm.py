@@ -46,7 +46,7 @@ async def ask_llm(messages: list[ChatMessage], lang: str, settings: Settings) ->
     completion = await client.chat.completions.create(
         model=settings.llm_model,
         messages=[
-            {"role": "system", "content": system_prompt(lang)},
+            {"role": "system", "content": await system_prompt(lang)},
             *({"role": m.role, "content": m.content} for m in messages),
         ],
         temperature=0.4,
