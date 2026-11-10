@@ -17,9 +17,9 @@ Del prototipo a producción: interfaces rápidas, APIs seguras y asistentes con 
 Ocho años diseñando y mejorando operaciones logísticas, desde la planeación del espacio hasta la tecnología que lo mueve.
 - Layouts de almacén, bodega, cross dock y CEDIS: capacidad de almacenaje, flujos de producto, andenes, zonas de picking y crecimiento futuro; entregables listos para decidir e invertir.
 - Optimización de procesos: diagnóstico de recepción, almacenaje, surtido y embarques; detección de cuellos de botella y mejoras medibles con KPIs.
-- Implementación de WMS: selección, parametrización e integración del sistema de gestión de almacén, con pruebas y capacitación para el arranque.
-- Sorters y conveyors: dimensionamiento y especificación de sistemas de clasificación y transporte para alto volumen de paquetes y cajas.
-- AS/RS y nuevas tecnologías: evaluación de automatización (AS/RS, shuttles, robótica) con análisis de retorno de inversión.
+- Licitaciones de WMS, equipo y sistemas logísticos: Quasar Devs NO fabrica ni vende WMS, montacargas ni equipos. Acompaña al cliente como asesor durante todo el proceso: define requerimientos y especificaciones, prepara y conduce la licitación, evalúa y compara a los proveedores, y da seguimiento hasta la entrega, instalación y puesta en marcha.
+- Esto aplica a: WMS (sistemas de gestión de almacén), montacargas y equipo de manejo de materiales, sistemas de almacenamiento (racks, estantería, mezzanines), sorters y conveyors, AS/RS, shuttles y robótica, entre otros servicios logísticos.
+- Evaluación de automatización con análisis de retorno de inversión, para decidir si conviene y cuándo.
 - Dashboards y analítica: tableros de operación con datos propios del cliente (Excel, Google Sheets, SQL, Firebase).
 
 ## Proceso de trabajo (sección #proceso)
@@ -31,7 +31,7 @@ Ocho años diseñando y mejorando operaciones logísticas, desde la planeación 
 ## Proyectos en órbita (sección #proyectos)
 - Cost Estimator (full stack, Next.js + .NET): sistema de estimación de costos con base de datos en tiempo real. Próximamente.
 - Nutrición JV (frontend y backend, React + Firebase): plataforma para nutriólogos con seguimiento de pacientes y dietas. https://www.jorge-valdez-nutricion-clinica.com.mx
-- Quasar Logistic (supply chain, Docker + AWS + TypeScript): plataforma logística con dashboards de operación y módulo WMS. https://quasar-logistic.vercel.app/
+- Quasar Logistic (supply chain, Docker + AWS + TypeScript): plataforma logística propia con dashboards de operación (proyecto de demostración). https://quasar-logistic.vercel.app/
 - VibeFit Store (e-commerce, Next.js + Azure SQL): tienda en línea de suplementos, ropa y accesorios de gym con recetas fit. https://vibe-fit-lac.vercel.app/
 - Task Manager (aplicación web): gestor de tareas para organizar proyectos y equipos. https://task-manager-orcin-omega-81.vercel.app/
 
@@ -40,7 +40,7 @@ Ocho años diseñando y mejorando operaciones logísticas, desde la planeación 
 - Combina software y operación logística: entiende el código y también el almacén donde se va a usar.
 - Herramientas de software: JavaScript, TypeScript, React, Next.js, Node.js, Flutter, Python.
 - Nube y datos: Google Cloud, AWS, Azure, Firestore, Supabase, SQL.
-- Supply chain: WMS, layouts, dashboards, Excel, Google Sheets.
+- Supply chain: layouts, licitaciones de WMS y equipo logístico, dashboards, Excel, Google Sheets.
 - Base: Ciudad de México, México.
 
 ## Contacto y cotizaciones (sección #contacto)

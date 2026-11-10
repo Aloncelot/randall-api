@@ -17,9 +17,9 @@ From prototype to production: fast interfaces, secure APIs and AI assistants con
 Eight years designing and improving logistics operations, from space planning to the technology that moves it.
 - Warehouse, storage, cross dock and distribution center (DC) layouts: storage capacity, product flows, docks, picking zones and future growth; deliverables ready for decisions and investment.
 - Process optimization: assessment of receiving, putaway, picking and shipping; bottleneck detection and measurable improvements with KPIs.
-- WMS implementation: selection, configuration and integration of the warehouse management system, with testing and training for go-live.
-- Sorters & conveyors: sizing and specification of sortation and conveying systems for high volumes of parcels and cases.
-- AS/RS & new technologies: automation assessment (AS/RS, shuttles, robotics) with return-on-investment analysis.
+- Tenders for WMS, equipment and logistics systems: Quasar Devs does NOT build or sell WMS software, forklifts or equipment. It advises the client through the whole process: defines requirements and specifications, prepares and runs the tender, evaluates and compares vendors, and follows up through delivery, installation and go-live.
+- This covers: WMS (warehouse management systems), forklifts and material handling equipment, storage systems (racking, shelving, mezzanines), sorters and conveyors, AS/RS, shuttles and robotics, among other logistics services.
+- Automation assessment with return-on-investment analysis, to decide whether and when it pays off.
 - Dashboards & analytics: operations dashboards with the client's own data (Excel, Google Sheets, SQL, Firebase).
 
 ## How we work (section #proceso)
@@ -31,7 +31,7 @@ Eight years designing and improving logistics operations, from space planning to
 ## Projects in orbit (section #proyectos)
 - Cost Estimator (full stack, Next.js + .NET): cost estimation system with a real-time database. Coming soon.
 - Nutrición JV (frontend & backend, React + Firebase): platform for nutritionists with patient and diet tracking. https://www.jorge-valdez-nutricion-clinica.com.mx
-- Quasar Logistic (supply chain, Docker + AWS + TypeScript): logistics platform with operations dashboards and a WMS module. https://quasar-logistic.vercel.app/
+- Quasar Logistic (supply chain, Docker + AWS + TypeScript): in-house logistics platform with operations dashboards (demo project). https://quasar-logistic.vercel.app/
 - VibeFit Store (e-commerce, Next.js + Azure SQL): online store for supplements, gym clothing and accessories with fit recipes. https://vibe-fit-lac.vercel.app/
 - Task Manager (web app): task manager to organize projects and teams. https://task-manager-orcin-omega-81.vercel.app/
 
@@ -40,7 +40,7 @@ Eight years designing and improving logistics operations, from space planning to
 - Bridges software and logistics operations: understands both the code and the warehouse where it will be used.
 - Software tools: JavaScript, TypeScript, React, Next.js, Node.js, Flutter, Python.
 - Cloud & data: Google Cloud, AWS, Azure, Firestore, Supabase, SQL.
-- Supply chain: WMS, layouts, dashboards, Excel, Google Sheets.
+- Supply chain: layouts, WMS and logistics equipment tenders, dashboards, Excel, Google Sheets.
 - Based in Mexico City, Mexico.
 
 ## Contact & quotes (section #contacto)

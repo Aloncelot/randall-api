@@ -46,22 +46,20 @@ TOPICS: tuple[Topic, ...] = (
         "We build AI chatbots that answer with your company's own information (RAG): customer service, inventory lookups and internal support, using Python and LLM APIs. [See software](#software)",
     ),
     Topic(
-        ("wms", "gestion de almacen", "warehouse management"),
+        ("wms", "gestion de almacen", "warehouse management", "licitacion", "tender", "bidding", "proveedor", "vendor",
+         "montacarga", "forklift", "rack", "estanteria", "almacenamiento", "storage system", "mezzanine",
+         "sorter", "conveyor", "banda", "transportador", "as/rs", "asrs", "shuttle", "equipo", "equipment"),
         "happy",
-        "Implementamos WMS: selección, parametrización e integración del sistema de gestión de almacén, con pruebas y capacitación para el arranque. [Ver supply chain](#supply-chain)",
-        "We implement WMS: selection, configuration and integration of the warehouse management system, with testing and training for go-live. [See supply chain](#supply-chain)",
+        "No vendemos WMS ni equipo: te acompañamos como asesores en la licitación de WMS, montacargas, sistemas de almacenamiento, sorters, conveyors, AS/RS y otros servicios logísticos. Definimos requerimientos, comparamos proveedores y damos seguimiento hasta la entrega y puesta en marcha. [Ver supply chain](#supply-chain)",
+        "We don't sell WMS or equipment: we advise you through the tender for WMS, forklifts, storage systems, sorters, conveyors, AS/RS and other logistics services. We define requirements, compare vendors and follow up through delivery and go-live. [See supply chain](#supply-chain)",
+        weight=2.0,
     ),
     Topic(
-        ("sorter", "conveyor", "banda", "transportador", "clasificacion"),
-        "happy",
-        "Dimensionamos y especificamos sorters y conveyors para alto volumen de paquetes y cajas. [Ver supply chain](#supply-chain)",
-        "We size and specify sorters and conveyors for high volumes of parcels and cases. [See supply chain](#supply-chain)",
-    ),
-    Topic(
-        ("as/rs", "asrs", "automatizacion", "robot", "shuttle", "automation", "robotics"),
+        ("automatiz", "robot", "automation", "automate", "robotics", "roi", "retorno"),
         "surprised",
-        "Evaluamos automatización (AS/RS, shuttles, robótica) con análisis de retorno de inversión, para decidir si conviene y cuándo. [Ver supply chain](#supply-chain)",
-        "We assess automation (AS/RS, shuttles, robotics) with return-on-investment analysis to decide whether and when it pays off. [See supply chain](#supply-chain)",
+        "Evaluamos si te conviene automatizar (AS/RS, shuttles, robótica) con análisis de retorno de inversión, y si decides hacerlo te acompañamos en la licitación hasta la puesta en marcha. [Ver supply chain](#supply-chain)",
+        "We assess whether automation pays off for you (AS/RS, shuttles, robotics) with ROI analysis, and if you go ahead we support you from the tender through go-live. [See supply chain](#supply-chain)",
+        weight=2.0,
     ),
     Topic(
         ("layout", "almacen", "bodega", "cedis", "cross dock", "crossdock", "warehouse", "distribution center"),
@@ -72,8 +70,8 @@ TOPICS: tuple[Topic, ...] = (
     Topic(
         ("supply", "cadena de suministro", "logistica", "logistics", "consultoria", "consulting", "proceso logistico", "kpi"),
         "happy",
-        "En supply chain llevamos 8 años: layouts de almacén y CEDIS, optimización de procesos, implementación de WMS, sorters y conveyors, AS/RS y dashboards. [Ver supply chain](#supply-chain)",
-        "8 years in supply chain: warehouse and DC layouts, process optimization, WMS implementation, sorters and conveyors, AS/RS and dashboards. [See supply chain](#supply-chain)",
+        "En supply chain llevamos 8 años: layouts de almacén y CEDIS, optimización de procesos, dashboards y acompañamiento en licitaciones de WMS, montacargas, sistemas de almacenamiento y automatización hasta la puesta en marcha. [Ver supply chain](#supply-chain)",
+        "8 years in supply chain: warehouse and DC layouts, process optimization, dashboards, and support in tenders for WMS, forklifts, storage systems and automation through go-live. [See supply chain](#supply-chain)",
     ),
     Topic(
         ("dashboard", "tablero", "analitica", "analytics", "excel", "sheets", "reporte"),
@@ -102,14 +100,14 @@ TOPICS: tuple[Topic, ...] = (
     Topic(
         ("servicio", "que hacen", "que ofrecen", "service", "what do you do", "offer"),
         "happy",
-        "Tenemos dos rutas:\n- [Software](#software): frontend, backend, full stack y chatbots con IA.\n- [Supply chain](#supply-chain): layouts de almacén y CEDIS, WMS, sorters, conveyors y AS/RS.",
-        "We have two tracks:\n- [Software](#software): frontend, backend, full stack and AI chatbots.\n- [Supply chain](#supply-chain): warehouse and DC layouts, WMS, sorters, conveyors and AS/RS.",
+        "Tenemos dos rutas:\n- [Software](#software): frontend, backend, full stack y chatbots con IA.\n- [Supply chain](#supply-chain): layouts de almacén y CEDIS, optimización de procesos y acompañamiento en licitaciones de WMS y equipo logístico.",
+        "We have two tracks:\n- [Software](#software): frontend, backend, full stack and AI chatbots.\n- [Supply chain](#supply-chain): warehouse and DC layouts, process optimization and support in WMS and logistics equipment tenders.",
     ),
     Topic(
         ("proyecto", "portafolio", "portfolio", "project", "trabajos", "ejemplo", "example"),
         "surprised",
-        "Algunos proyectos en órbita: Nutrición JV, Quasar Logistic (dashboards + WMS), VibeFit Store (e-commerce), Task Manager y Cost Estimator (próximamente). [Ver proyectos](#proyectos)",
-        "Some projects in orbit: Nutrición JV, Quasar Logistic (dashboards + WMS), VibeFit Store (e-commerce), Task Manager and Cost Estimator (coming soon). [See projects](#proyectos)",
+        "Algunos proyectos en órbita: Nutrición JV, Quasar Logistic (dashboards logísticos), VibeFit Store (e-commerce), Task Manager y Cost Estimator (próximamente). [Ver proyectos](#proyectos)",
+        "Some projects in orbit: Nutrición JV, Quasar Logistic (logistics dashboards), VibeFit Store (e-commerce), Task Manager and Cost Estimator (coming soon). [See projects](#proyectos)",
     ),
     Topic(
         ("proceso", "como trabajan", "pasos", "metodologia", "process", "how do you work", "steps"),

@@ -18,7 +18,9 @@ HAS_FASTAPI = importlib.util.find_spec("fastapi") is not None
     ("question", "lang", "expected"),
     [
         ("¿Cuánto cuesta una página web?", "es", "#contacto"),
-        ("Hacen implementación de WMS?", "es", "WMS"),
+        ("Hacen implementación de WMS?", "es", "licitación"),
+        ("¿Venden montacargas?", "es", "No vendemos"),
+        ("Can you help with a forklift tender?", "en", "tender"),
         ("Do you build AI chatbots?", "en", "RAG"),
         ("Quiero diseñar mi CEDIS", "es", "CEDIS"),
         ("¿Trabajan con C#?", "es", ".NET"),
