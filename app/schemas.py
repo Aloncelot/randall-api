@@ -10,6 +10,9 @@ Mood = Literal["idle", "happy", "talking", "thinking", "surprised", "sad", "slee
 
 MAX_MESSAGE_CHARS = 600
 MAX_HISTORY = 12
+# Solo los últimos mensajes y hasta este total de caracteres llegan a la IA (limita el gasto de tokens)
+LLM_HISTORY_MESSAGES = 6
+LLM_HISTORY_CHARS = 3_000
 
 
 class ChatMessage(BaseModel):
@@ -47,3 +50,18 @@ class ChatResponse(BaseModel):
     reply: str
     mood: Mood
     source: Literal["llm", "faq"]
+
+
+def trim_history(messages: list[ChatMessage]) -> list[ChatMessage]:
+    """Recorta el historial: últimos mensajes y presupuesto total de caracteres, terminando en el del usuario."""
+    kept: list[ChatMessage] = []
+    total = 0
+    for message in reversed(messages[-LLM_HISTORY_MESSAGES:]):
+        total += len(message.content)
+        if kept and total > LLM_HISTORY_CHARS:
+            break
+        kept.append(message)
+    kept.reverse()
+    while kept and kept[0].role != "user":  # que la conversación empiece con el usuario
+        kept.pop(0)
+    return kept or messages[-1:]

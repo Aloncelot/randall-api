@@ -19,13 +19,18 @@ from app.config import get_settings
 from app.knowledge import load_knowledge
 from app.llm import ask_llm
 from app.ratelimit import RateLimiter
-from app.schemas import ChatRequest, ChatResponse
+from app.schemas import ChatRequest, ChatResponse, trim_history
 
 logger = logging.getLogger("randall")
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s: %(message)s")
 
 settings = get_settings()
-limiter = RateLimiter(settings.rate_per_minute, settings.rate_per_day)
+limiter = RateLimiter(
+    settings.rate_per_minute,
+    settings.rate_per_day,
+    llm_per_minute=settings.llm_per_minute,
+    llm_per_day=settings.llm_per_day,
+)
 
 app = FastAPI(
     title="Randall API — Quasar Devs",
@@ -68,33 +73,50 @@ async def validation_error(_: Request, __: RequestValidationError):
 
 def client_ip(request: Request) -> str:
     if settings.trust_proxy:
+        # Vercel y la mayoría de proxies ponen la IP real del visitante en estas cabeceras
+        real = request.headers.get("x-real-ip", "").strip()
+        if real:
+            return real
         forwarded = request.headers.get("x-forwarded-for", "")
         if forwarded:
             return forwarded.split(",")[0].strip()
     return request.client.host if request.client else "unknown"
 
 
+def origin_allowed(request: Request) -> bool:
+    if not settings.require_origin:
+        return True
+    origin = (request.headers.get("origin") or "").rstrip("/")
+    return origin in settings.allowed_origins
+
+
 @app.get("/health")
 async def health():
     _, source = await load_knowledge("es")
-    return {"status": "ok", "llm": settings.llm_enabled, "knowledge": source}
+    return {"status": "ok", "llm": settings.llm_enabled, "knowledge": source, "ratelimit": limiter.backend}
 
 
 @app.post("/chat", response_model=ChatResponse)
 async def chat(body: ChatRequest, request: Request):
-    if not limiter.allow(client_ip(request)):
+    if not origin_allowed(request):
+        return JSONResponse({"detail": "Origen no permitido"}, status_code=403)
+
+    if not await limiter.allow_visitor(client_ip(request)):
         msg = (
             "Voy muy rápido, dame unos segundos para recargar energía. ⚡"
             if body.lang == "es"
             else "I'm going too fast, give me a few seconds to recharge. ⚡"
         )
-        return JSONResponse({"reply": msg, "mood": "sleepy", "source": "faq"}, status_code=429)
+        return JSONResponse(
+            {"reply": msg, "mood": "sleepy", "source": "faq"}, status_code=429, headers={"Retry-After": "60"}
+        )
 
     question = body.messages[-1].content
 
-    if settings.llm_enabled:
+    # Si se agotó el presupuesto global de IA, se responde en modo FAQ (no se rechaza al visitante)
+    if settings.llm_enabled and await limiter.allow_llm():
         try:
-            reply, mood = await ask_llm(body.messages, body.lang, settings)
+            reply, mood = await ask_llm(trim_history(body.messages), body.lang, settings)
             return ChatResponse(reply=reply, mood=mood, source="llm")
         except Exception as exc:  # el proveedor falló: seguimos con el modo FAQ
             logger.warning("Fallo del LLM, usando FAQ: %s", type(exc).__name__)

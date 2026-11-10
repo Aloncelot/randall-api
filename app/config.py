@@ -44,9 +44,15 @@ class Settings:
         )
     )
 
-    # Límite de peticiones por IP
-    rate_per_minute: int = field(default_factory=lambda: _int("RATE_LIMIT_PER_MINUTE", 10))
-    rate_per_day: int = field(default_factory=lambda: _int("RATE_LIMIT_PER_DAY", 150))
+    # Límite de preguntas por visitante (IP)
+    rate_per_minute: int = field(default_factory=lambda: _int("RATE_LIMIT_PER_MINUTE", 6))
+    rate_per_day: int = field(default_factory=lambda: _int("RATE_LIMIT_PER_DAY", 60))
+    # Presupuesto global de llamadas a la IA (cuota de Groq). Al agotarse, Randall responde en modo FAQ.
+    # Con el plan gratis de Groq (~8,000 tokens/min y ~200,000/día) y ~3,500 tokens por pregunta: 2/min y ~55/día.
+    llm_per_minute: int = field(default_factory=lambda: _int("LLM_GLOBAL_PER_MINUTE", 2))
+    llm_per_day: int = field(default_factory=lambda: _int("LLM_GLOBAL_PER_DAY", 55))
+    # Exigir que el navegador mande un Origin permitido (bloquea scripts simples que llaman la API directo)
+    require_origin: bool = field(default_factory=lambda: os.getenv("REQUIRE_ORIGIN", "true").lower() == "true")
     # Activar solo si la API corre detrás de un proxy de confianza (Render, Railway, Fly, Nginx)
     trust_proxy: bool = field(default_factory=lambda: os.getenv("TRUST_PROXY", "false").lower() == "true")
 
