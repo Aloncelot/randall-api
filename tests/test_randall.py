@@ -25,7 +25,7 @@ HAS_FASTAPI = importlib.util.find_spec("fastapi") is not None
         ("Do you build AI chatbots?", "en", "RAG"),
         ("Quiero diseñar mi CEDIS", "es", "CEDIS"),
         ("¿Trabajan con C#?", "es", ".NET"),
-        ("Show me your projects", "en", "Quasar Logistic"),
+        ("Show me your projects", "en", "Quasar S&OP"),
     ],
 )
 def test_faq_topics(question, lang, expected):

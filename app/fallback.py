@@ -106,8 +106,8 @@ TOPICS: tuple[Topic, ...] = (
     Topic(
         ("proyecto", "portafolio", "portfolio", "project", "trabajos", "ejemplo", "example"),
         "surprised",
-        "Algunos proyectos en órbita: Nutrición JV, Quasar Logistic (dashboards logísticos), VibeFit Store (e-commerce), Task Manager y Cost Estimator (próximamente). [Ver proyectos](#proyectos)",
-        "Some projects in orbit: Nutrición JV, Quasar Logistic (logistics dashboards), VibeFit Store (e-commerce), Task Manager and Cost Estimator (coming soon). [See projects](#proyectos)",
+        "Algunos proyectos en órbita: Quasar Logistic (torre de control logística), VibeFit Store (e-commerce), Task Manager, y próximamente Cost Estimator y Quasar S&OP (inventarios, demanda y programación). [Ver proyectos](#proyectos)",
+        "Some projects in orbit: Quasar Logistic (logistics control tower), VibeFit Store (e-commerce), Task Manager, and coming soon Cost Estimator and Quasar S&OP (inventory, demand and scheduling). [See projects](#proyectos)",
     ),
     Topic(
         ("proceso", "como trabajan", "pasos", "metodologia", "process", "how do you work", "steps"),
